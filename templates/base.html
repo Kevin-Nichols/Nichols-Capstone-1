@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Initiative Role</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/static/stylesheets/style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  
+  <script src="https://unpkg.com/jquery"></script>
+  <script src="https://unpkg.com/popper"></script>
+  <script src="https://unpkg.com/bootstrap"></script>
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+<nav class="navbar navbar-expand">
+    <div class="container-fluid">
+  
+      <div class="navbar-header">
+        <a href="/" class="navbar-brand">
+          <span>Initiative Role</span>
+        </a>
+      </div>
+  
+      <ul class="nav navbar-nav navbar-right">
+  
+        {% if not g.user %}
+          <li><a href="/signup">Sign up</a></li>
+          <li><a href="/login">Log in</a></li>
+        {% else %}
+          <li>
+            <a href="/user/{{ g.user.id }}">
+              <img src="{{ g.user.image_url }}" alt="{{ g.user.username }}">
+            </a>
+          </li>
+          <li><a href="/encounter/new">New Encounter</a></li>
+          <form action="/logout" method="POST">
+            {{ g.UserLogoutForm.hidden_tag() }}
+            <li><button class="btn btn-link" href="/logout">Log out</button></li>
+          </form>
+        {% endif %}
+  
+      </ul>
+    </div>
+  </nav>
+  
+  <div class="container">
+  
+    {% for category, message in get_flashed_messages(with_categories=True) %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  
+    {% block content %}
+    {% endblock %}
+  
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

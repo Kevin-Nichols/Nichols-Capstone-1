@@ -35,6 +35,8 @@ class User(db.Model):
         nullable=False,
     )
     
+    encounters = db.relationship('Encounter')
+    
     @classmethod
     def signup(cls, username, email, password, image_url):
         """Sign up a user.
@@ -136,6 +138,10 @@ class Encounter(db.Model):
         db.Integer,
         primary_key=True,
     )
+    name = db.Column(
+        db.Text,
+        nullable=False,
+    )
     cards_id = db.Column(
         db.Integer,
         db.ForeignKey('cards.id', ondelete="cascade")
@@ -144,6 +150,12 @@ class Encounter(db.Model):
         db.Integer,
         db.ForeignKey('monsters.id', ondelete="cascade")
     )
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id', ondelete='CASCADE'),
+        nullable=False,
+    )
+    user = db.relationship('User')
     
     
     
