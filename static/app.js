@@ -19,8 +19,8 @@ const lowerNames = allNames;
 //Creates a variable that grabs input text and makes it lower case. Then creates a variable that compares the input and lowerNames, then creates a new array. Returns the new filtered array and changes the first letter back to upper case.
 function search(str) {
 	let userInput = input.value.toLowerCase();
-	let filterNames = lowerNames.filter(word => word.match(userInput));
-	let results = filterNames.map(x => x.charAt(0).toUpperCase() + x.substring(1));
+	let results = lowerNames.filter(word => word.match(userInput));
+	// let results = filterNames.map(x => x.charAt(0).toUpperCase() + x.substring(1));
 	return results;
 }
 
@@ -57,3 +57,18 @@ suggestions.addEventListener('click', useSuggestion);
 //functions for other things.
 
 
+function createLink() {
+	let linkContainer = document.getElementById("linkContainer");
+	let inputField = document.getElementById("monster");
+
+	let monsterName = inputField.value;
+
+	// Create the <a> element
+	let link = document.createElement("a");
+	link.href = "/stats/" + monsterName;
+	link.textContent = `View Info for ${monsterName}`;
+
+	// Append the <a> element to the link container
+	linkContainer.appendChild(link);
+	linkContainer.appendChild(document.createElement("br"));
+}

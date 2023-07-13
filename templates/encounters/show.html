@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>{{ encounter.name }}</h1>
+  <h1>{{ name }}</h1>
 
   <div class="search-container">
 	<h3>Add a monster</h3>
 	<div class="form-inline">
-		<input class="form-control mr-1" type="text" name="monster" id="monster" placeholder="Search Monsters">
-		<button class="btn btn-primary">Add Monster</button>
+		<input type="text" name="monster" id="monster" placeholder="Search Monsters">
+		<button class="btn btn-outline-success btn-block" onclick="createLink()"">Add Monster</button>
 	</div>
 	<div class="suggestions">
 		<ul class="monster-ul"></ul>
+	</div>
+	<div id="linkContainer">
+
 	</div>
 </div>
 {% endblock %}

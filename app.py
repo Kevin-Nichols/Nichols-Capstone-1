@@ -231,5 +231,33 @@ def create_encounter():
 @app.route('/encounter/<int:encounter_id>', methods=["GET"])
 def show_encounter(encounter_id):
     
+    if not g.user:
+        flash("Unauthorized user, please log in.", "danger")
+        return redirect("/")
+    
     id = Encounter.query.get(encounter_id)
-    return render_template('encounters/show.html', encounter=id)
+    
+    if not id:
+        flash("Invalid URL, please access a valid encounter", "danger")
+        return redirect("/encounter/new")
+    else:
+        name = id.name
+        return render_template('encounters/show.html', encounter=id, name=name)
+    
+    
+##############################################################################
+# Monster Stat Page
+
+
+@app.route('/stats/<monster_name>')
+def stat_block_test(monster_name):
+    
+    if not g.user:
+        flash("Unauthorized user, please log in.", "danger")
+        return redirect("/")
+    
+    url = f"https://www.dnd5eapi.co/api/monsters/{monster_name}"
+    monster_data = get_monster_data(url)
+    stat_block = get_stat_block_data(monster_data)
+    
+    return render_template('stats.html', stat_block=stat_block, monster_name=monster_name)
