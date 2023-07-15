@@ -34,9 +34,11 @@
           <li>
             <a href="/user/{{ g.user.id }}">
               <img src="{{ g.user.image_url }}" alt="{{ g.user.username }}">
+              {{ g.user.username }}
             </a>
           </li>
           <li><a href="/encounter/new">New Encounter</a></li>
+          <li><a href="/encounter/all">All Encounters</a></li>
           <form action="/logout" method="POST">
             {{ g.UserLogoutForm.hidden_tag() }}
             <li><button class="btn btn-link" href="/logout">Log out</button></li>

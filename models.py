@@ -19,7 +19,6 @@ class User(db.Model):
     email = db.Column(
         db.Text,
         nullable=False,
-        unique=True,
     )
     username = db.Column(
         db.Text,
@@ -36,6 +35,7 @@ class User(db.Model):
     )
     
     encounters = db.relationship('Encounter')
+    monsters = db.relationship('Monster', backref='user')
     
     @classmethod
     def signup(cls, username, email, password, image_url):
@@ -122,10 +122,13 @@ class Monster(db.Model):
         db.Integer,
         db.ForeignKey('encounters.id', ondelete="cascade")
     )
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id', ondelete='CASCADE')
+    )
     monster_name = db.Column(
         db.Text,
         nullable=False,
-        unique=True
     )
     
     
@@ -152,10 +155,10 @@ class Encounter(db.Model):
     )
     user_id = db.Column(
         db.Integer,
-        db.ForeignKey('users.id', ondelete='CASCADE'),
-        nullable=False,
+        db.ForeignKey('users.id', ondelete='CASCADE')
     )
     user = db.relationship('User')
+    monsters = db.relationship('Monster', foreign_keys='Monster.encounter_id', backref='encounter')
     
     
     

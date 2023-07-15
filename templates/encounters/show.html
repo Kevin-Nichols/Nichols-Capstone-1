@@ -6,13 +6,25 @@
 	<h3>Add a monster</h3>
 	<div class="form-inline">
 		<input type="text" name="monster" id="monster" placeholder="Search Monsters">
-		<button class="btn btn-outline-success btn-block" onclick="createLink()"">Add Monster</button>
+		<button class="btn btn-outline-success btn-block" onclick="createLink()">Add Monster</button>
 	</div>
 	<div class="suggestions">
 		<ul class="monster-ul"></ul>
 	</div>
-	<div id="linkContainer">
 
+	<div class="monsters-in-table">
+		<ul>
+			{% for monster in monsters %}
+				<li>
+					<a href="/stats/{{ monster.monster_name }}">{{ monster.monster_name }}</a>
+					<form class="remove-monster-form" action="/monster/remove" method="POST" style="display:inline;">
+						<input type="hidden" name="encounter_id" value="{{ encounter.id }}">
+						<input type="hidden" name="monster_id" value="{{ monster.id }}">
+						<button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+					</form>
+				</li>
+			{% endfor %}
+		</ul>
 	</div>
 </div>
 {% endblock %}

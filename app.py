@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, flash, redirect, session, g
+from flask import Flask, redirect, render_template, flash, redirect, session, g, jsonify, request, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
@@ -11,6 +11,9 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///initiative-role'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
+app.config['ENV'] = 'development'
+app.config['DEBUG'] = True
+app.config['TESTING'] = True
 
 connect_db(app)
 db.create_all()
@@ -68,6 +71,10 @@ def signup():
     form = AddUserForm()
 
     if form.validate_on_submit():
+        if form.password.data != form.confirm_password.data:
+            flash("Passwords do not match", 'danger')
+            return render_template('users/signup.html', form=form)
+        
         try:
             user = User.signup(
                 username=form.username.data,
@@ -78,10 +85,12 @@ def signup():
             db.session.commit()
 
         except IntegrityError:
+            db.session.rollback()
             flash("Username already taken", 'danger')
             return render_template('users/signup.html', form=form)
 
         do_login(user)
+        flash("Welcome to Initiative Role!", "success")
 
         return redirect("/")
 
@@ -101,7 +110,7 @@ def login():
 
         if user:
             do_login(user)
-            flash(f"Hello, {user.username}!", "success")
+            flash(f"Hi {user.username}, welcome back!", "success")
             return redirect("/")
 
         flash("Invalid credentials.", 'danger')
@@ -168,7 +177,7 @@ def edit_user():
             form=form)
 
 
-@app.route('/users/delete', methods=["POST"])
+@app.route('/user/delete', methods=["POST"])
 def delete_user():
     """Delete user."""
 
@@ -180,12 +189,13 @@ def delete_user():
 
     db.session.delete(g.user)
     db.session.commit()
+    flash("User has been deleted", "danger")
 
-    return redirect("/signup")
+    return redirect("/")
 
 
 ##############################################################################
-# Homepage and error pages
+# Homepage and error page
 
 @app.route('/')
 def homepage():
@@ -236,17 +246,34 @@ def show_encounter(encounter_id):
         return redirect("/")
     
     id = Encounter.query.get(encounter_id)
+    session['encounter_id'] = encounter_id
     
     if not id:
         flash("Invalid URL, please access a valid encounter", "danger")
         return redirect("/encounter/new")
     else:
         name = id.name
-        return render_template('encounters/show.html', encounter=id, name=name)
+        monsters = id.monsters
+    
+        return render_template('encounters/show.html', encounter=id, name=name, monsters=monsters)
+    
+    
+@app.route('/encounter/all', methods=["GET"])
+def show_all_encounters():
+    
+    if not g.user:
+        flash("Unauthorized user, please log in.", "danger")
+        return redirect("/")
+    
+    user_id = g.user.id
+    user = User.query.get(user_id)
+    encounters = user.encounters
+    
+    return render_template('encounters/all.html', encounters=encounters)
     
     
 ##############################################################################
-# Monster Stat Page
+# Monster Pages
 
 
 @app.route('/stats/<monster_name>')
@@ -261,3 +288,43 @@ def stat_block_test(monster_name):
     stat_block = get_stat_block_data(monster_data)
     
     return render_template('stats.html', stat_block=stat_block, monster_name=monster_name)
+
+@app.route('/monster/add', methods=['POST'])
+def add_monster():
+    monster_name = request.json.get('monsterName')
+    encounter_id = session.get('encounter_id')
+    
+    monster = Monster(monster_name=monster_name, encounter_id=encounter_id, user_id=g.user.id)
+    db.session.add(monster)
+    db.session.commit()
+    
+    flash("Monster added successfully.", "success")
+    return redirect(f"/encounter/{encounter_id}")
+
+
+@app.route('/monster/remove', methods=['POST'])
+def remove_monster():
+    encounter_id = request.form.get('encounter_id')
+    monster_id = request.form.get('monster_id')
+
+    # Retrieve the encounter and monster from the database
+    encounter = Encounter.query.get(encounter_id)
+    monster = Monster.query.get(monster_id)
+
+    # Check if the encounter and monster exist
+    if not encounter or not monster:
+        flash("Encounter or monster not found.", "danger")
+        return redirect("/")
+
+    # Check if the monster belongs to the encounter
+    if monster not in encounter.monsters:
+        flash("Monster does not belong to the encounter.", "danger")
+        return redirect("/")
+
+    # Remove the monster from the encounter
+    encounter.monsters.remove(monster)
+    db.session.delete(monster)
+    db.session.commit()
+
+    flash("Monster removed successfully.", "success")
+    return redirect(f"/encounter/{encounter_id}")

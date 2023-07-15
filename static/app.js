@@ -58,17 +58,43 @@ suggestions.addEventListener('click', useSuggestion);
 
 
 function createLink() {
-	let linkContainer = document.getElementById("linkContainer");
+	// let linkContainer = document.getElementById("linkContainer");
 	let inputField = document.getElementById("monster");
 
 	let monsterName = inputField.value;
 
-	// Create the <a> element
-	let link = document.createElement("a");
-	link.href = "/stats/" + monsterName;
-	link.textContent = `View Info for ${monsterName}`;
+	fetch("/monster/add", {
+        method: "POST",
+        body: JSON.stringify({ monsterName }),
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token() }}"  // Include CSRF token if required
+        }
+    })
 
-	// Append the <a> element to the link container
-	linkContainer.appendChild(link);
-	linkContainer.appendChild(document.createElement("br"));
+	setTimeout(function() {
+		location.reload();
+	  }, 50);
 }
+
+
+//function for removing a monster from an encounter.
+$(document).ready(function() {
+	// Submit the form when the Remove button is clicked
+	$('.remove-monster-form').submit(function(event) {
+		event.preventDefault();
+		var form = $(this);
+		$.ajax({
+			url: form.attr('action'),
+			type: form.attr('method'),
+			data: form.serialize(),
+			success: function(response) {
+				// Remove the <li> from the list
+				form.closest('li').remove();
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		});
+	});
+});

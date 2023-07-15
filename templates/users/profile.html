@@ -3,5 +3,8 @@
   <h1>{{ user.username }} Profile Page</h1>
   <dvi class="edit-btn">
     <a href="/user/edit" class="btn btn-outline-secondary">Edit User Details</a>
+    <br>
+    <form method="POST" action="/user/delete" class="form-inline">
+      <button class="btn btn-outline-danger mt-4">Delete User</button>
   </dvi>
 {% endblock %}

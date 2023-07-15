@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>All of your encounters</h1>
+
+  <ul>
+    {% for encounter in encounters %}
+        <li><a href="/encounter/{{ encounter.id }}">{{ encounter.name }}</a></li>
+    {% endfor %}
+{% endblock %}
