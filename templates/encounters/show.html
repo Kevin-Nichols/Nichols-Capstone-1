@@ -2,6 +2,16 @@
 {% block content %}
   <h1>{{ name }}</h1>
 
+  <h3>Add a card</h3>
+  <div class="form-inline">
+    <button class="btn btn-outline-success btn-block" onclick="createCard()">Add Initiative Card</button>
+    <button class="btn btn-outline-success btn-block" onclick="saveCardData()">Save Card Data</button>
+  </div>
+
+  <div id="cardContainer">
+   
+  </div>
+
   <div class="search-container">
 	<h3>Add a monster</h3>
 	<div class="form-inline">

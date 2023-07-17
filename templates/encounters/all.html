@@ -4,6 +4,13 @@
 
   <ul>
     {% for encounter in encounters %}
-        <li><a href="/encounter/{{ encounter.id }}">{{ encounter.name }}</a></li>
+        <li>
+          <a href="/encounter/{{ encounter.id }}">{{ encounter.name }}</a>
+          <form action="/encounter/remove" method="POST" style="display: inline;">
+            <input type="hidden" name="encounter_id" value="{{ encounter.id }}">
+            <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+          </form>
+        </li>
     {% endfor %}
+  </ul>
 {% endblock %}

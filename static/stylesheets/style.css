@@ -340,7 +340,7 @@ body {
   .search-container {
    position: relative;
    left: 47%;
-   top: 500px;
+   top: 300px;
    width: 204px;
   }
   
@@ -371,4 +371,50 @@ body {
   .monster-ul li:hover {
     cursor: pointer;
     background-color: #e65c00;
+  }
+
+   /* ============================== initiative cards and buttons */
+
+   #cardContainer{
+    display:grid;
+    grid-template-columns: repeat(8, 18%);
+    grid-gap:5px;
+  }
+
+  #cardContainer label{
+    text-align:right;
+  }
+
+  #cardContainer label:after {
+    content: ":";
+  }
+
+  .card{
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    background-color: rgb(245, 239, 226);
+  }
+
+  .card-label{
+    display: inline-block;
+    width: 110px;
+    text-align: right;
+  }
+
+  .card-input{
+    margin: 2;
+  }
+
+  .card-body button{
+    margin:5 auto;
+    display:block;
+  }
+
+  .card.selected {
+    background-color: #a0e5fa;
+  }
+
+  .btn{
+    margin: 4;
   }

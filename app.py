@@ -270,6 +270,29 @@ def show_all_encounters():
     encounters = user.encounters
     
     return render_template('encounters/all.html', encounters=encounters)
+
+
+@app.route('/encounter/remove', methods=["POST"])
+def remove_encounter():
+    """Remove an encounter from the database."""
+
+    if not g.user:
+        flash("Unauthorized user, please log in.", "danger")
+        return redirect("/")
+
+    encounter_id = request.form.get('encounter_id')
+
+    encounter = Encounter.query.get(encounter_id)
+
+    if not encounter:
+        flash("Encounter not found.", "danger")
+        return redirect("/encounter/all")
+
+    db.session.delete(encounter)
+    db.session.commit()
+
+    flash(f"{encounter.name} removed successfully.", "success")
+    return redirect("/encounter/all")
     
     
 ##############################################################################
