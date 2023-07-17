@@ -2,7 +2,7 @@ from flask import Flask, redirect, render_template, flash, redirect, session, g,
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
-from models import db, connect_db, User, Card, Monster, Encounter
+from models import db, connect_db, User, Monster, Encounter
 from forms import AddUserForm, LoginForm, LogoutUserForm, UpdateUserForm, EncounterForm
 from functions import *
 
