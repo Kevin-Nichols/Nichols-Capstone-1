@@ -124,7 +124,7 @@ def logout():
 
     if g.UserLogoutForm.validate_on_submit():
         do_logout()
-        flash("You have logged out, goodbye!", 'success')
+        flash("You have been logged out. We hope see you again soon!", 'success')
 
     return redirect('/')
 
@@ -177,9 +177,20 @@ def edit_user():
             form=form)
 
 
-@app.route('/user/delete', methods=["POST"])
+@app.route('/user/delete')
 def delete_user():
     """Delete user."""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+    
+    return render_template('users/confirmation.html')
+
+
+@app.route('/user/confirm_delete', methods=["POST"])
+def confirm_delete_user():
+    """Confirm user deletion."""
 
     if not g.user:
         flash("Access unauthorized.", "danger")
@@ -189,7 +200,7 @@ def delete_user():
 
     db.session.delete(g.user)
     db.session.commit()
-    flash("User has been deleted", "danger")
+    flash("User has been deleted, happy adventuring!", "danger")
 
     return redirect("/")
 

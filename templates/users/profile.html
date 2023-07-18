@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="welcome">
+  <img class="logo" src="/static/images/initiativeRoll-logo.png">
+
   <h1>{{ user.username }} Profile Page</h1>
-  <dvi class="edit-btn">
-    <a href="/user/edit" class="btn btn-outline-secondary">Edit User Details</a>
-    <br>
-    <form method="POST" action="/user/delete" class="form-inline">
-      <button class="btn btn-outline-danger mt-4">Delete User</button>
-  </dvi>
+
+  <div class="home-btns">
+    <a class="btn btn-outline-secondary btn-block btn-lg mx-2" href="/user/edit">Edit User Details</a>
+    <a class="btn btn-outline-danger btn-block btn-lg mx-2" href="/user/delete">Delete User</a>
+  </div>
+</div>
 {% endblock %}

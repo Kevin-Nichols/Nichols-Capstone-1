@@ -13,7 +13,7 @@ body {
   }
   
   .btn {
-    border-radius: 50px;
+    border-radius: 15px;
   }
   
   .btn:hover {
@@ -23,7 +23,7 @@ body {
   /* ======================= Nav */
   
   .navbar {
-    background-color: #003803;
+    background-color: #014204;
     height: 46px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.25);
     margin-bottom: 1rem;
@@ -32,7 +32,7 @@ body {
   }
   
   .navbar a {
-    color: #7c4817;
+    color: #815225;
     font-size: 13px;
     font-weight: bold;
   }
@@ -73,19 +73,21 @@ body {
     position: relative;
   }
   
-  .onboarding .navbar-header {
+  /* .onboarding .navbar-header {
     margin: 0 auto;
-  }
+  } */
   
-  .onboarding .navbar-brand {
+  /* .onboarding .navbar-brand {
     margin: 0;
+    display: flex;
+    align-items: center;
   }
   
   .onboarding .navbar-brand span {
-    display: none;
-  }
+    display: inline-block;
+  } */
   
-  .onboarding .nav.navbar-nav.navbar-right {
+  /* .onboarding .nav.navbar-nav.navbar-right {
     position: absolute;
     right: 16px;
   }
@@ -96,10 +98,10 @@ body {
   
   .onboarding > .navbar form.navbar-form {
     display: none;
-  }
+  } */
   
   .onboarding {
-    background-color: #fff;
+    background-color: #e7f0e6;
   }
   
   @media (max-width: 468px) {
@@ -112,14 +114,19 @@ body {
     margin-bottom: 1rem;
   }
 
-  h1{
-    text-align: center;
+  .navbar-right a{
+    text-decoration: none;
+  }
+
+  .navbar-right button{
+    text-decoration: none;
   }
   
   /* ===================== User profile */
   
   .join-message {
     margin-top: 100px;
+    text-align: center;
   }
   
   #profile-image,
@@ -250,6 +257,38 @@ body {
     bottom: 0;
     background: rgba(255, 255, 255, 0.3);
   }
+
+  h1{
+    text-align: center;
+    font-size: 150%;
+  }
+
+  .container .alert{
+    text-align: center;
+    margin: 0;
+  }
+
+  .container p {
+    text-align: center;
+    font-size: large;
+  }
+
+  .home-btns{
+    text-align: center;
+  }
+
+  .welcome{
+    position: relative;
+    top: 100px;
+  }
+
+  .logo{
+    height: 80px;
+    width: 61px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
   
   /* ============================== Signed in Home */
   
@@ -295,6 +334,18 @@ body {
     font-weight: bold;
     padding: 12px;
   }
+
+  #signup-btn{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #login-btn{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
   
   /* =========================== Edit Page */
   
@@ -305,6 +356,15 @@ body {
   
   .edit-btn-area > .btn {
     width: 48%;
+  }
+
+  .button-container {
+    display: inline-block;
+  }
+  
+  .button-container a,
+  .button-container button {
+    margin-right: 10px;
   }
   
   /* ================================ 404 page */
@@ -327,6 +387,18 @@ body {
     flex: 1;
   }
 
+   /* ================================ Encounter pages */
+
+   .new-encounter-h1{
+    margin-top: 100px;
+   }
+
+   #encounter-add-btn{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+   }
+
   /* ================================ Monster Search */
 
   * {
@@ -339,27 +411,31 @@ body {
   
   .search-container {
    position: relative;
-   left: 47%;
-   top: 300px;
+   /* left: 47%; */
+   top: 50px;
    width: 204px;
+  }
+
+  .search-container .btn{
+    margin-bottom: 10px;
   }
   
   .search-container input {
-   background-color: #1b1000;
+   /* background-color: #1b1000; */
    height: 35px;
    border: none;
    border-radius: 5px;
    text-align: center;
    width: 204px;
    font-family: 'Chivo', sans-serif;
-   color: lightgray;
+   /* color: lightgray; */
   }
   .search-container .suggestions {
-    background-color: #1b1000;
+    background-color: #fff;
     border-radius: 5px;
     text-align: center;
     font-family: 'Chivo', sans-serif;
-    color: lightgray;
+    /* color: #fff; */
   }
   
   .monster-ul {
@@ -370,14 +446,20 @@ body {
   
   .monster-ul li:hover {
     cursor: pointer;
-    background-color: #e65c00;
+    background-color: #1c94e0;
+  }
+
+  .monsters-in-table{
+    position: absolute;
+    left: 300px;
+    width: 500px;
   }
 
    /* ============================== initiative cards and buttons */
 
    #cardContainer{
     display:grid;
-    grid-template-columns: repeat(8, 18%);
+    grid-template-columns: repeat(8, 18.5%);
     grid-gap:5px;
   }
 
@@ -393,7 +475,8 @@ body {
     border-style: solid;
     border-width: 2px;
     border-radius: 5px;
-    background-color: rgb(245, 239, 226);
+    background-color: rgb(247, 248, 239);
+    margin-top: 10px;
   }
 
   .card-label{
@@ -406,9 +489,10 @@ body {
     margin: 2;
   }
 
-  .card-body button{
+  .card .card-body .btn{
     margin:5 auto;
     display:block;
+    margin-top: 16px;
   }
 
   .card.selected {

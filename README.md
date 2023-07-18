@@ -1,4 +1,4 @@
-# Initiative Role
+# initiativeRoll
 
 - A D&D combat and inactivate tool for DM's everywhere.
 

@@ -21,14 +21,15 @@
   
       <div class="navbar-header">
         <a href="/" class="navbar-brand">
-          <span>Initiative Role</span>
+          <img src="/static/images/initiativeRoll-logo-brown.png" alt="logo">
+          <span>initiativeRoll</span>
         </a>
       </div>
   
       <ul class="nav navbar-nav navbar-right">
   
         {% if not g.user %}
-          <li><a href="/signup">Sign up</a></li>
+          <li><a href="/signup">Sign up</a></li> 
           <li><a href="/login">Log in</a></li>
         {% else %}
           <li>
@@ -41,7 +42,7 @@
           <li><a href="/encounter/all">All Encounters</a></li>
           <form action="/logout" method="POST">
             {{ g.UserLogoutForm.hidden_tag() }}
-            <li><button class="btn btn-link" href="/logout">Log out</button></li>
+            <li><button class="btn btn-link" href="/logout">Log Out</button></li>
           </form>
         {% endif %}
   

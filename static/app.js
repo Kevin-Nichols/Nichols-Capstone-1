@@ -68,7 +68,7 @@ function createLink() {
         body: JSON.stringify({ monsterName }),
         headers: {
             "Content-Type": "application/json",
-            "X-CSRFToken": "{{ csrf_token() }}"  // Include CSRF token if required
+            "X-CSRFToken": "{{ csrf_token() }}"
         }
     })
 

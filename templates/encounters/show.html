@@ -2,25 +2,18 @@
 {% block content %}
   <h1>{{ name }}</h1>
 
-  <h3>Add a card</h3>
+  <h3>Initiative Cards</h3>
   <div class="form-inline">
     <button class="btn btn-outline-success btn-block" onclick="createCard()">Add Initiative Card</button>
     <button class="btn btn-outline-success btn-block" onclick="saveCardData()">Save Card Data</button>
   </div>
 
   <div id="cardContainer">
-   
+   <!-- This is where initiative cards are when generated -->
   </div>
 
   <div class="search-container">
-	<h3>Add a monster</h3>
-	<div class="form-inline">
-		<input type="text" name="monster" id="monster" placeholder="Search Monsters">
-		<button class="btn btn-outline-success btn-block" onclick="createLink()">Add Monster</button>
-	</div>
-	<div class="suggestions">
-		<ul class="monster-ul"></ul>
-	</div>
+	<h3>Monster List</h3>
 
 	<div class="monsters-in-table">
 		<ul>
@@ -36,5 +29,13 @@
 			{% endfor %}
 		</ul>
 	</div>
-</div>
+
+	<button class="btn btn-outline-success btn-block" onclick="createLink()">Add Monster</button>
+	<div class="form-inline">
+		<input type="text" name="monster" id="monster" placeholder="Search Monsters">
+	</div>
+
+	<div class="suggestions">
+		<ul class="monster-ul"></ul>
+	</div>
 {% endblock %}

@@ -1,4 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Logged in Home Page</h1>
+<div class="welcome">
+  <img class="logo" src="static/images/initiativeRoll-logo.png">
+  
+  <h1>initiativeRoll</h1>
+
+  <p>Time to play!</p>
+  <p>Add an encounter to start a new battle, or view an existing encounter.</p>
+
+  <div class="home-btns">
+    <a class="btn btn-outline-success btn-block btn-lg mx-2" href="/encounter/new">Add New Encounter</a>
+    <a class="btn btn-outline-success btn-block btn-lg mx-2" href="/encounter/all">View All Encounters</a>
+  </div>
+</div>
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<h1 class="new-encounter-h1">Create A New Encounter</h1>
   <div class="row justify-content-center">
     <div class="col-md-6">
       <form method="POST">
@@ -15,7 +15,7 @@
           {% endif %}
           {{ form.name(placeholder="Name your new encounter!", class="form-control", rows="3") }}
         </div>
-        <button class="btn btn-outline-success btn-block">Add encounter</button>
+        <button id="encounter-add-btn" class="btn btn-outline-success btn-block">Add encounter</button>
       </form>
     </div>
   </div>

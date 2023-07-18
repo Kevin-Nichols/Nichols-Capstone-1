@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="welcome">
+  <img class="logo" src="/static/images/initiativeRoll-logo.png">
+  
+  <h1>Confirm User Deletion</h1>
+
+  <p>Are you sure? We hate to see you go.</p>
+
+  <div class="home-btns">
+    <form action="/user/confirm_delete" method="POST">
+      <div class="button-container">
+        <a class="btn btn-outline-danger btn-lg mx-2" href="javascript:void(0);" onclick="this.closest('form').submit();">Confirm</a>
+        <button class="btn btn-outline-secondary btn-lg mx-2" type="button" onclick="window.location.href='/'">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
