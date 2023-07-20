@@ -76,39 +76,6 @@ class User(db.Model):
 
         return False
     
-# class Card(db.Model):
-#     """Tables for initiative cards"""
-    
-#     __tablename__ = "cards"
-    
-#     id = db.Column(
-#         db.Integer,
-#         primary_key=True
-#     )
-#     encounter_id = db.Column(
-#         db.Integer,
-#         db.ForeignKey('encounters.id', ondelete="cascade")
-#     )
-#     player_name = db.Column(
-#         db.Text,
-#         nullable=False,
-#     )
-#     initiative = db.Column(
-#         db.Integer,
-#         nullable=False
-#     )
-#     armor_class = db.Column(
-#         db.Integer,
-#         nullable=False
-#     )
-#     hit_points = db.Column(
-#         db.Integer,
-#         nullable=False
-#     )
-#     spell_save_dc = db.Column(
-#         db.Integer
-#     )
-    
 class Monster(db.Model):
     """Tables for monsters in a given encounter."""
     

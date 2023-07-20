@@ -1,3 +1,4 @@
+import os
 from flask import Flask, redirect, render_template, flash, redirect, session, g, jsonify, request, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
@@ -8,7 +9,8 @@ from functions import *
 
 CURR_USER_KEY = "curr_user"
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///initiative-role'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///initiative-role'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['ENV'] = 'development'
