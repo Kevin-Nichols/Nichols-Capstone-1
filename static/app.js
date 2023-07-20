@@ -45,7 +45,7 @@ function showSuggestions(results) {
 function useSuggestion(e) {
 	if(e.target.tagName === 'LI'){
 		input.value = e.target.innerText;
-		suggestions.innerHTML = '';
+		suggestions.innerHTML = ''; 
 	}
 }
 
@@ -63,6 +63,8 @@ function createLink() {
 
 	let monsterName = inputField.value;
 
+  // if (monsterName != ""){
+  if(allNames.some(e => e == monsterName)){
 	fetch("/monster/add", {
         method: "POST",
         body: JSON.stringify({ monsterName }),
@@ -75,6 +77,7 @@ function createLink() {
 	setTimeout(function() {
 		location.reload();
 	  }, 50);
+  }
 }
 
 

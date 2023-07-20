@@ -16,10 +16,13 @@
 	<h3>Monster List</h3>
 
 	<div class="monsters-in-table">
+		{% if monsters%}
+		<p>Click for more info</p>
+		{%endif%}
 		<ul>
 			{% for monster in monsters %}
 				<li>
-					<a href="/stats/{{ monster.monster_name }}">{{ monster.monster_name }}</a>
+					<a class="encounter-a" href="/stats/{{ monster.monster_name }}">{{ monster.monster_name|capitalize }}</a>
 					<form class="remove-monster-form" action="/monster/remove" method="POST" style="display:inline;">
 						<input type="hidden" name="encounter_id" value="{{ encounter.id }}">
 						<input type="hidden" name="monster_id" value="{{ monster.id }}">

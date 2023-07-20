@@ -244,7 +244,7 @@ def create_encounter():
         g.user.encounters.append(encounter)
         db.session.commit()
 
-        return redirect(f"/encounter/{encounter.id}")
+        return redirect("/encounter/all")
     
     return render_template('encounters/new-encounter.html', form=form)
 

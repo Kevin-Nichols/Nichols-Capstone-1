@@ -50,7 +50,7 @@ body {
     display: inline-block;
     margin-bottom: 2px;
     margin-right: 5px;
-    width: 20px;
+    width: 16px;
     border-radius: 2px;
   }
   
@@ -73,33 +73,6 @@ body {
     position: relative;
   }
   
-  /* .onboarding .navbar-header {
-    margin: 0 auto;
-  } */
-  
-  /* .onboarding .navbar-brand {
-    margin: 0;
-    display: flex;
-    align-items: center;
-  }
-  
-  .onboarding .navbar-brand span {
-    display: inline-block;
-  } */
-  
-  /* .onboarding .nav.navbar-nav.navbar-right {
-    position: absolute;
-    right: 16px;
-  }
-  
-  .onboarding > .navbar a {
-    color: #fff;
-  }
-  
-  .onboarding > .navbar form.navbar-form {
-    display: none;
-  } */
-  
   .onboarding {
     background-color: #e7f0e6;
   }
@@ -120,6 +93,16 @@ body {
 
   .navbar-right button{
     text-decoration: none;
+  }
+
+  .logout-form li{
+    width: 75px;
+  }
+
+  .logout-form li button{
+    color: rgba(0, 0, 0, 0.623);
+    font-weight: 700;
+    font-size: small;
   }
   
   /* ===================== User profile */
@@ -277,14 +260,22 @@ body {
     text-align: center;
   }
 
+  .home-btns a{
+    text-decoration: none;
+  }
+
+  .home-btns ul{
+    list-style-type: none;
+  }
+
   .welcome{
     position: relative;
     top: 100px;
   }
 
   .logo{
-    height: 80px;
-    width: 61px;
+    height: 160px;
+    width: 82px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -399,6 +390,26 @@ body {
     margin-right: auto;
    }
 
+   .encounter-a{
+    font-size: larger;
+    font-weight: 600;
+    padding: 8px 14px 8px 14px;
+    border: solid #014204 1px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: black;
+   }
+
+   .encounter-a:hover{
+    background-color: #014204c2;
+    transition: background-color 0.3s ease;
+   }
+
+   .all-encounters-li{
+    margin-top: 20px;
+    margin-bottom: 20px;
+   }
+
   /* ================================ Monster Search */
 
   * {
@@ -455,6 +466,15 @@ body {
     width: 500px;
   }
 
+  .monsters-in-table ul{
+    list-style: none;
+  }
+
+  .monsters-in-table li{
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
    /* ============================== initiative cards and buttons */
 
    #cardContainer{
@@ -487,6 +507,10 @@ body {
 
   .card-input{
     margin: 2;
+    border-radius: 4px;
+    outline: none;
+    text-align: center;
+    width: 100%;
   }
 
   .card .card-body .btn{

@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>All of your encounters</h1>
+  {% if encounters %}
+  <h1 class="new-encounter-h1">All Encounters</h1>
 
+  <div class="home-btns">
   <ul>
     {% for encounter in encounters %}
-        <li>
-          <a href="/encounter/{{ encounter.id }}">{{ encounter.name }}</a>
+        <li class="all-encounters-li">
+          <a class="encounter-a" href="/encounter/{{ encounter.id }}">{{ encounter.name }}</a>
           <form action="/encounter/remove" method="POST" style="display: inline;">
             <input type="hidden" name="encounter_id" value="{{ encounter.id }}">
             <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
@@ -13,4 +15,13 @@
         </li>
     {% endfor %}
   </ul>
+  </div>
+
+  {% else %}
+  <h1 class="new-encounter-h1">You Have Not Made Any Encounters Yet</h1>
+
+  <div class="home-btns">
+    <a class="btn btn-outline-success btn-block btn-lg mx-2" href="/encounter/new">Add New Encounter</a>
+  </div>
+  {% endif %}
 {% endblock %}

@@ -1,3 +1,5 @@
+from jinja2 import nodes
+from jinja2.ext import Extension
 import requests
 
 def get_monster_data(url):
@@ -7,14 +9,24 @@ def get_monster_data(url):
     else:
         raise Exception("An error occurred while fetching data")
     
+def remove_keys(data, keys_to_remove):
+    if isinstance(data, dict):
+        for key, value in list(data.items()):
+            if key in keys_to_remove:
+                del data[key]
+            else:
+                remove_keys(value, keys_to_remove)
+    elif isinstance(data, list):
+        for item in data:
+            remove_keys(item, keys_to_remove)
+    
 
 def get_stat_block_data(data):
     
     proficiencies = []
     for proficiency in data["proficiencies"]:
         proficiency_data = {
-            "Value": proficiency["value"],
-            "Name": proficiency["proficiency"]["name"],
+            "Name": proficiency["proficiency"]["name"] + " " + "|" + " " + str(proficiency["value"]),
         }
         proficiencies.append(proficiency_data)
         
@@ -37,6 +49,8 @@ def get_stat_block_data(data):
     for action in data["actions"]:
         if "actions" in action:
             del action["actions"]
+            
+        remove_keys(action, ["url", "index"])
             
         actions.append(action)
         
