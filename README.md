@@ -30,7 +30,7 @@ If the server has not been in use for a while, it may take a minute to wake back
 
 ### Tech Stack
 - Python
-- Flask (with plenty of tools, see requirments.txt)
+- Flask (with plenty of tools, see requirements.txt)
 - Javascript
 - Postgresql (SQLAlchemy)
 - HTML
