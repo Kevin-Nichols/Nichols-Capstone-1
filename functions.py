@@ -2,6 +2,7 @@ from jinja2 import nodes
 from jinja2.ext import Extension
 import requests
 
+#Retrieves all monster data from the API.
 def get_monster_data(url):
     res = requests.get(url)
     if res.status_code == 200:
@@ -9,6 +10,7 @@ def get_monster_data(url):
     else:
         raise Exception("An error occurred while fetching data")
     
+#Handles the removal of unwanted keys on a monster's stats page.
 def remove_keys(data, keys_to_remove):
     if isinstance(data, dict):
         for key, value in list(data.items()):
@@ -20,9 +22,10 @@ def remove_keys(data, keys_to_remove):
         for item in data:
             remove_keys(item, keys_to_remove)
     
-
+#Handles generating all wanted data from the API on a monster's stat page.
 def get_stat_block_data(data):
     
+    #Makes changes to the proficiencies key value data.
     proficiencies = []
     for proficiency in data["proficiencies"]:
         proficiency_data = {
@@ -30,6 +33,7 @@ def get_stat_block_data(data):
         }
         proficiencies.append(proficiency_data)
         
+    #Makes changes to the abilities key value data.
     abilities = []
     for ability in data["special_abilities"]:
         dc_type_name = ""
@@ -45,6 +49,7 @@ def get_stat_block_data(data):
 
         abilities.append(ability_data)
         
+    #Makes changes to the actions key value data.
     actions = []
     for action in data["actions"]:
         if "actions" in action:
@@ -54,6 +59,7 @@ def get_stat_block_data(data):
             
         actions.append(action)
         
+    #This is the wanted info to display in a given monster from the API.
     stat_block = {
         "Name": data["name"],
         "Size": data["size"],
@@ -76,6 +82,5 @@ def get_stat_block_data(data):
         "Special Abilities": abilities,
         "Actions": actions,
         "Legendary Actions": data["legendary_actions"],
-        # "image": data["image"],
     }
     return stat_block

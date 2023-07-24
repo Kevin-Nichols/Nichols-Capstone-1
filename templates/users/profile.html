@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="welcome">
-  <img class="logo" src="/static/images/initiativeRoll-logo.png">
+  <img class="user-image" src="{{ g.user.image_url }}">
 
   <h1>{{ user.username }} Profile Page</h1>
 

@@ -9,10 +9,14 @@ from functions import *
 
 CURR_USER_KEY = "curr_user"
 app = Flask(__name__)
+#Deployment DB
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+
+#Development DB
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///initiative-role'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ECHO'] = True
+
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.config['SQLALCHEMY_ECHO'] = True
 # app.config['ENV'] = 'development'
 # app.config['DEBUG'] = True
 # app.config['TESTING'] = True
@@ -20,7 +24,7 @@ app.config['SQLALCHEMY_ECHO'] = True
 connect_db(app)
 db.create_all()
 
-app.config['SECRET_KEY'] = "supersecret"
+# app.config['SECRET_KEY'] = "supersecret"
 
 # Having the Debug Toolbar show redirects explicitly is often useful;
 # however, if you want to turn it off, you can uncomment this line:
@@ -66,7 +70,7 @@ def signup():
 
     If form not valid, present form.
 
-    If the there already is a user with that username: flash message
+    If there is already a user with that username: flash message
     and re-present form.
     """
 
@@ -115,14 +119,14 @@ def login():
             flash(f"Hi {user.username}, welcome back!", "success")
             return redirect("/")
 
-        flash("Invalid credentials.", 'danger')
+        flash("Invalid credentials", 'danger')
 
     return render_template('users/login.html', form=form)
 
 
 @app.route('/logout', methods=["POST"])
 def logout():
-    """Handle logout of user."""
+    """Handle user logout."""
 
     if g.UserLogoutForm.validate_on_submit():
         do_logout()
@@ -145,16 +149,16 @@ def users_show(user_id):
 
 @app.route('/user/edit', methods=["GET", "POST"])
 def edit_user():
-    """Update profile for current user."""
+    """Edit current user's profile."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash("Access unauthorized", "danger")
         return redirect("/")
 
     form = UpdateUserForm(obj=g.user)
 
     if form.validate_on_submit():
-        # check if password submitted on form is user's correct password
+        # check if the password submitted on form is user's correct password.
         if not g.user.authenticate(
             g.user.username, 
             form.password.data):
@@ -167,7 +171,7 @@ def edit_user():
 
         g.user.username = form.username.data
         g.user.email = form.email.data
-        g.user.image_url = form.image_url.data
+        g.user.image_url = form.image_url.data or User.image_url.default.arg
 
         db.session.commit()
         return redirect('/')
@@ -181,10 +185,10 @@ def edit_user():
 
 @app.route('/user/delete')
 def delete_user():
-    """Delete user."""
+    """Redirects to the confirmation page for deleting a user's profile."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash("Access unauthorized", "danger")
         return redirect("/")
     
     return render_template('users/confirmation.html')
@@ -192,10 +196,10 @@ def delete_user():
 
 @app.route('/user/confirm_delete', methods=["POST"])
 def confirm_delete_user():
-    """Confirm user deletion."""
+    """Confirms the deletion of a user's profile."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash("Access unauthorized", "danger")
         return redirect("/")
 
     do_logout()
@@ -214,8 +218,8 @@ def confirm_delete_user():
 def homepage():
     """Show homepage:
 
-    - anon users: Login
-    - logged in: Website interface
+    - anon users: Sign up & Log in
+    - logged in: New Encounters & All Encounters
     """
 
     if g.user:
@@ -226,6 +230,7 @@ def homepage():
     
 @app.errorhandler(404)
 def show_404_page(err):
+    """Handles 404 errors and page."""
     return render_template('404.html'), 404
 
 
@@ -234,6 +239,11 @@ def show_404_page(err):
 
 @app.route('/encounter/new', methods=["GET", "POST"])
 def create_encounter():
+    """Handles adding a new encounter.
+    
+    Here you can name new encounters and add them to the database.
+    Once you add a new encounter, you are redirected to show all existing encounters.
+    """
     
     if not g.user:
         flash("Unauthorized user, please log in.", "danger")
@@ -246,6 +256,7 @@ def create_encounter():
         g.user.encounters.append(encounter)
         db.session.commit()
 
+        flash(f"{encounter.name} has been created", 'success')
         return redirect("/encounter/all")
     
     return render_template('encounters/new-encounter.html', form=form)
@@ -253,6 +264,11 @@ def create_encounter():
 
 @app.route('/encounter/<int:encounter_id>', methods=["GET"])
 def show_encounter(encounter_id):
+    """Handles showing a selected encounter's main page.
+    
+    Here you are able to add initiative cards and monsters to the encounter.
+    Once you add a monster to the encounter, you can click it and be taken to it's full information sheet.
+    """
     
     if not g.user:
         flash("Unauthorized user, please log in.", "danger")
@@ -262,7 +278,7 @@ def show_encounter(encounter_id):
     session['encounter_id'] = encounter_id
     
     if not id:
-        flash("Invalid URL, please access a valid encounter", "danger")
+        flash("Invalid URL, please enter a valid encounter id", "danger")
         return redirect("/encounter/new")
     else:
         name = id.name
@@ -273,9 +289,13 @@ def show_encounter(encounter_id):
     
 @app.route('/encounter/all', methods=["GET"])
 def show_all_encounters():
+    """Handles displaying all existing encounters on the database that are created by the logged in user.
+    
+    From this page you can click on each encounter to be taken to their page.
+    """
     
     if not g.user:
-        flash("Unauthorized user, please log in.", "danger")
+        flash("Unauthorized user, please log in", "danger")
         return redirect("/")
     
     user_id = g.user.id
@@ -287,7 +307,10 @@ def show_all_encounters():
 
 @app.route('/encounter/remove', methods=["POST"])
 def remove_encounter():
-    """Remove an encounter from the database."""
+    """Handles removing an encounter from the database.
+    
+    Then redirects back to all encounters page.
+    """
 
     if not g.user:
         flash("Unauthorized user, please log in.", "danger")
@@ -298,13 +321,13 @@ def remove_encounter():
     encounter = Encounter.query.get(encounter_id)
 
     if not encounter:
-        flash("Encounter not found.", "danger")
+        flash("Encounter not found", "danger")
         return redirect("/encounter/all")
 
     db.session.delete(encounter)
     db.session.commit()
 
-    flash(f"{encounter.name} removed successfully.", "success")
+    flash(f"{encounter.name} removed successfully", "success")
     return redirect("/encounter/all")
     
     
@@ -314,6 +337,7 @@ def remove_encounter():
 
 @app.route('/stats/<monster_name>')
 def stat_block_test(monster_name):
+    """Handles displaying all the information on a given monster pulled from the API."""
     
     if not g.user:
         flash("Unauthorized user, please log in.", "danger")
@@ -327,6 +351,8 @@ def stat_block_test(monster_name):
 
 @app.route('/monster/add', methods=['POST'])
 def add_monster():
+    """Handles adding a monster to an encounter page."""
+    
     monster_name = request.json.get('monsterName')
     encounter_id = session.get('encounter_id')
     
@@ -334,33 +360,31 @@ def add_monster():
     db.session.add(monster)
     db.session.commit()
     
-    flash("Monster added successfully.", "success")
     return redirect(f"/encounter/{encounter_id}")
 
 
 @app.route('/monster/remove', methods=['POST'])
 def remove_monster():
+    """Handles removing a monster to an encounter page."""
+    
     encounter_id = request.form.get('encounter_id')
     monster_id = request.form.get('monster_id')
 
-    # Retrieve the encounter and monster from the database
     encounter = Encounter.query.get(encounter_id)
     monster = Monster.query.get(monster_id)
 
     # Check if the encounter and monster exist
     if not encounter or not monster:
-        flash("Encounter or monster not found.", "danger")
+        flash("Encounter or monster not found", "danger")
         return redirect("/")
 
     # Check if the monster belongs to the encounter
     if monster not in encounter.monsters:
-        flash("Monster does not belong to the encounter.", "danger")
+        flash("Monster does not belong to the encounter", "danger")
         return redirect("/")
 
-    # Remove the monster from the encounter
     encounter.monsters.remove(monster)
     db.session.delete(monster)
     db.session.commit()
 
-    flash("Monster removed successfully.", "success")
     return redirect(f"/encounter/{encounter_id}")

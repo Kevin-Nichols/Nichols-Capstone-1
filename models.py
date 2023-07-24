@@ -1,4 +1,4 @@
-"""SQLAlchemy models for Initiative Role."""
+"""SQLAlchemy models for initiativeRoll."""
 
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
@@ -77,7 +77,7 @@ class User(db.Model):
         return False
     
 class Monster(db.Model):
-    """Tables for monsters in a given encounter."""
+    """Table for a monster in a given encounter."""
     
     __tablename__ = "monsters"
     

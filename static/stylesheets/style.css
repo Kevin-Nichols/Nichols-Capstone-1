@@ -5,7 +5,7 @@ body {
   }
   
   body.error-404 {
-    background-color: #1da1f2;
+    background-color: #fff;
   }
   
   .form-control {
@@ -38,7 +38,7 @@ body {
   }
   
   .navbar a:hover {
-    color: #1c94e0;
+    color: #fff;
   }
   
   .navbar-brand {
@@ -71,10 +71,6 @@ body {
   nav form.navbar-form {
     display: flex;
     position: relative;
-  }
-  
-  .onboarding {
-    background-color: #e7f0e6;
   }
   
   @media (max-width: 468px) {
@@ -338,7 +334,7 @@ body {
     margin-right: auto;
   }
   
-  /* =========================== Edit Page */
+  /* =========================== Profile Page */
   
   .edit-btn-area {
     display: flex;
@@ -356,6 +352,15 @@ body {
   .button-container a,
   .button-container button {
     margin-right: 10px;
+  }
+
+  .user-image{
+    max-height: 250px;
+    max-width: 250px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 250px;
   }
   
   /* ================================ 404 page */
@@ -442,11 +447,10 @@ body {
    /* color: lightgray; */
   }
   .search-container .suggestions {
-    background-color: #fff;
+    background-color: #f7f8ef;
     border-radius: 5px;
     text-align: center;
     font-family: 'Chivo', sans-serif;
-    /* color: #fff; */
   }
   
   .monster-ul {
@@ -495,7 +499,7 @@ body {
     border-style: solid;
     border-width: 2px;
     border-radius: 5px;
-    background-color: rgb(247, 248, 239);
+    background-color: #f7f8ef;
     margin-top: 10px;
   }
 
