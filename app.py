@@ -24,7 +24,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 connect_db(app)
 db.create_all()
 
-# app.config['SECRET_KEY'] = "supersecret"
+app.config['SECRET_KEY'] = "supersecret"
 
 # Having the Debug Toolbar show redirects explicitly is often useful;
 # however, if you want to turn it off, you can uncomment this line:
