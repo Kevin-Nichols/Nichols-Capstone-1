@@ -314,7 +314,7 @@ body {
     text-align: left;
   }
   
-  /* ========================== Signup/Login */
+  /* ========================== Sign up/Login */
   
   #user_form input.form-control {
     font-size: 18px;
@@ -396,9 +396,9 @@ body {
    }
 
    .encounter-a{
-    font-size: larger;
+    font-size: x-large;
     font-weight: 600;
-    padding: 8px 14px 8px 14px;
+    padding: 14px 14px 14px 14px;
     border: solid #014204 1px;
     border-radius: 15px;
     text-decoration: none;
@@ -411,8 +411,25 @@ body {
    }
 
    .all-encounters-li{
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+   }
+
+   #monster-img{
+    max-height: 50px;
+    border-radius: 8px;
+    margin-bottom: 7px;
+    margin-right: 4px;
+   }
+
+   #big-monster-img{
+    position: absolute;
+    max-height: 400px;
+    top: 40%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+    border: solid #014204c2 2px;
+    border-radius: 10px;
    }
 
   /* ================================ Monster Search */
@@ -437,14 +454,12 @@ body {
   }
   
   .search-container input {
-   /* background-color: #1b1000; */
    height: 35px;
    border: none;
    border-radius: 5px;
    text-align: center;
    width: 204px;
    font-family: 'Chivo', sans-serif;
-   /* color: lightgray; */
   }
   .search-container .suggestions {
     background-color: #f7f8ef;
@@ -475,8 +490,12 @@ body {
   }
 
   .monsters-in-table li{
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+
+  .remove-monster-form{
+    margin-left: 3px;
   }
 
    /* ============================== initiative cards and buttons */

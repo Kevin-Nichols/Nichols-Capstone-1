@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% set default_image_url = '/static/images/default-monster.jpg' %}
   <h1>{{ name }}</h1>
 
   <h3>Initiative Cards</h3>
@@ -22,11 +23,14 @@
 		<ul>
 			{% for monster in monsters %}
 				<li>
-					<a class="encounter-a" href="/stats/{{ monster.monster_name }}">{{ monster.monster_name|capitalize }}</a>
+					<a class="encounter-a" href="/stats/{{ monster.monster_name }}">
+						<img id="monster-img" src="https://www.aidedd.org/dnd/images/{{ monster.monster_name }}.jpg" onerror="replaceMissingImage(this)">
+						{{ monster.monster_name|capitalize }}
+					</a>
 					<form class="remove-monster-form" action="/monster/remove" method="POST" style="display:inline;">
 						<input type="hidden" name="encounter_id" value="{{ encounter.id }}">
 						<input type="hidden" name="monster_id" value="{{ monster.id }}">
-						<button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+						<button type="submit" class="btn btn-outline-danger">Remove</button>
 					</form>
 				</li>
 			{% endfor %}
@@ -41,4 +45,11 @@
 	<div class="suggestions">
 		<ul class="monster-ul"></ul>
 	</div>
+
+	<script>
+		function replaceMissingImage(imageElement) {
+		  // Replace the image source with the default image URL
+		  imageElement.src = '{{ default_image_url }}';
+		}
+	</script>
 {% endblock %}
