@@ -383,6 +383,14 @@ body {
     flex: 1;
   }
 
+  .error-img {
+    height: 100px;
+    width: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
    /* ================================ Encounter pages */
 
    .new-encounter-h1{
@@ -478,7 +486,7 @@ body {
     cursor: pointer;
     background-color: #1c94e0;
   }
-
+ 
   .monsters-in-table{
     position: absolute;
     left: 300px;

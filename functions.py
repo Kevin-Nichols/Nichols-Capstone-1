@@ -88,6 +88,5 @@ def get_stat_block_data(data):
 
 #TODO: Stretch goals I would like to achieve.
     # Change spacing on all encounters page.
-    # Find monster image database and include images for all monsters.
     # Implement a "forgot my password" function and route.
     # Make the monster stat page prettier.
