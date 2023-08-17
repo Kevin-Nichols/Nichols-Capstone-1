@@ -1,8 +1,6 @@
 # initiativeRoll
 A D&D combat and inactivate tool for DM's everywhere.
 - With this app, you are able to keep track and organize combat encounters in your campaign while being able to add and have access to full details on every D&D monster in the 5e API.
-  
-![demo-gif](https://im4.ezgif.com/tmp/ezgif-4-7be046834a.gif)
 
 ## Features
 - Secure login and user profile customization.
