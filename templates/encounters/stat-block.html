@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% block content %}
+{% set default_image_url = '/static/images/default-monster.jpg' %}
+
+<form>
+  <input class="btn btn-outline-secondary btn-block" type="button" value="Back" onclick="history.back()">
+</form>
+
+<div class="side-by-side-layout">
+  <div class="stat-block-container">
+    <div class="stat-block wide">
+      <hr class="orange-border" />
+      <div class="section-left">
+        <div class="creature-heading">
+          <h1>{{ stat_block.Name }}</h1>
+          <h2>{{ stat_block.Size }} {{ stat_block.Type }}, {{ stat_block.Alignment }}</h2>
+        </div> <!-- creature heading -->
+        <svg height="5" width="100%" class="tapered-rule">
+          <polyline points="0,0 400,2.5 0,5"></polyline>
+        </svg>
+        <div class="top-stats">
+          <div class="property-line first">
+            <h4>Armor Class</h4>
+            <p>{{ stat_block.Armor_Class[0]['value'] }}</p>
+          </div> <!-- property line -->
+          <div class="property-line">
+            <h4>Hit Points</h4>
+            <p>{{ stat_block.Hit_Points }} ({{ stat_block.Hit_Points_Roll }})</p>
+          </div> <!-- property line -->
+          <div class="property-line last">
+            <h4>Speed</h4>
+            {% if stat_block.Speed.walk %}
+              <p>walk {{ stat_block.Speed.walk }}</p>
+            {% endif %}
+            {% if stat_block.Speed.swim %}
+              <p>swim {{ stat_block.Speed.swim }}</p>
+            {% endif %}
+            {% if stat_block.Speed.fly %}
+              <p>fly {{ stat_block.Speed.fly }}</p>
+            {% endif %}
+            {% if stat_block.Speed.climb %}
+              <p>climb {{ stat_block.Speed.climb }}</p>
+            {% endif %}
+            {% if stat_block.Speed.burrow %}
+              <p>burrow {{ stat_block.Speed.burrow }}</p>
+            {% endif %}
+          </div> <!-- property line -->
+          <svg height="5" width="100%" class="tapered-rule">
+          <polyline points="0,0 400,2.5 0,5"></polyline>
+        </svg>
+          <div class="abilities">
+            <div class="ability-strength">
+              <h4>STR</h4>
+              {% if stat_block.Strength > 9 %}
+                <p>{{ stat_block.Strength }} (+{{ ((stat_block.Strength - 10) / 2)|round(0, 'floor')|int }})</p>
+              {% else %}
+                <p>{{ stat_block.Strength }} ({{ ((stat_block.Strength - 10) / 2)|round(0, 'floor')|int }})</p>
+              {% endif %}
+            </div> <!-- ability strength -->
+            <div class="ability-dexterity">
+              <h4>DEX</h4>
+              {% if stat_block.Dexterity > 9 %}
+                <p>{{ stat_block.Dexterity }} (+{{ ((stat_block.Dexterity - 10) / 2)|round(0, 'floor')|int }})</p>
+              {% else %}
+                <p>{{ stat_block.Dexterity }} ({{ ((stat_block.Dexterity - 10) / 2)|round(0, 'floor')|int }})</p>
+              {% endif %}
+            </div> <!-- ability dexterity -->
+            <div class="ability-constitution">
+              <h4>CON</h4>
+              {% if stat_block.Constitution > 9 %}
+                <p>{{ stat_block.Constitution }} (+{{ ((stat_block.Constitution - 10) / 2)|round(0, 'floor')|int }})</p>
+              {% else %}
+                <p>{{ stat_block.Constitution }} ({{ ((stat_block.Constitution - 10) / 2)|round(0, 'floor')|int }})</p>
+              {% endif %}
+            </div> <!-- ability constitution -->
+            <div class="ability-intelligence">
+              <h4>INT</h4>
+              {% if stat_block.Intelligence > 9 %}
+                <p>{{ stat_block.Intelligence }} (+{{ ((stat_block.Intelligence - 10) / 2)|round(0, 'floor')|int }})</p>
+              {% else %}
+                <p>{{ stat_block.Intelligence }} ({{ ((stat_block.Intelligence - 10) / 2)|round(0, 'floor')|int }})</p>
+              {% endif %}
+            </div> <!-- ability intelligence -->
+            <div class="ability-wisdom">
+              <h4>WIS</h4>
+              {% if stat_block.Wisdom > 9 %}
+                <p>{{ stat_block.Wisdom }} (+{{ ((stat_block.Wisdom - 10) / 2)|round(0, 'floor')|int }})</p>
+              {% else %}
+                <p>{{ stat_block.Wisdom }} ({{ ((stat_block.Wisdom - 10) / 2)|round(0, 'floor')|int }})</p>
+              {% endif %}
+            </div> <!-- ability wisdom -->
+            <div class="ability-charisma">
+              <h4>CHA</h4>
+              {% if stat_block.Charisma > 9 %}
+                <p>{{ stat_block.Charisma }} (+{{ ((stat_block.Charisma - 10) / 2)|round(0, 'floor')|int }})</p>
+              {% else %}
+                <p>{{ stat_block.Charisma }} ({{ ((stat_block.Charisma - 10) / 2)|round(0, 'floor')|int }})</p>
+              {% endif %}
+            </div> <!-- ability charisma -->
+          </div> <!-- abilities -->
+          <svg height="5" width="100%" class="tapered-rule">
+          <polyline points="0,0 400,2.5 0,5"></polyline>
+        </svg>
+          <div class="property-line first">
+            {% set encountered_proficiencies = [] %}
+    
+            {% for proficiency in stat_block.Proficiencies %}
+              {% if proficiency.proficiency.name.startswith('Saving Throw:') and 'Saving Throw' not in encountered_proficiencies %}
+                {% set _ = encountered_proficiencies.append('Saving Throw') %}
+                <h4>Saving Throws</h4>
+              {% elif proficiency.proficiency.name.startswith('Skill:') and 'Skill' not in encountered_proficiencies %}
+                {% set _ = encountered_proficiencies.append('Skill') %}
+                <br>
+                <div class="h4-wrapper">
+                  <h4 class="proficiency-header">Skills</h4>
+                </div>
+              {% endif %}
+              <p>{{ proficiency.proficiency.name.replace('Saving Throw: ', '').replace('Skill: ', '') }} +{{ proficiency.value }},</p>
+            {% endfor %}
+          </div> <!-- property line -->
+          <div class="property-line">
+            {% if stat_block.Damage_Vulnerabilities[0] %}
+              <h4>Damage Vulnerabilities</h4>
+              {% for entry in stat_block.Damage_Vulnerabilities %}
+                <p>{{ entry }},</p>
+              {% endfor %}
+            {% endif %}
+          </div> <!-- property line -->
+          <div class="property-line">
+            {% if stat_block.Damage_Resistances[0] %}
+              <h4>Damage Resistances</h4>
+              {% for entry in stat_block.Damage_Resistances %}
+                <p>{{ entry }},</p>
+              {% endfor %}
+            {% endif %}
+          </div> <!-- property line -->
+          <div class="property-line">
+            {% if stat_block.Damage_Immunities[0] %}
+              <h4>Damage Immunities</h4>
+              {% for entry in stat_block.Damage_Immunities %}
+                <p>{{ entry }},</p>
+              {% endfor %}
+            {% endif %}
+          </div> <!-- property line -->
+          <div class="property-line">
+            {% if stat_block.Condition_Immunities[0] %}
+              <h4>Condition Immunities</h4>
+              {% for entry in stat_block.Condition_Immunities %}
+                <p>{{ entry.name }},</p>
+              {% endfor %}
+            {% endif %}
+          </div> <!-- property line -->
+          <div class="property-line">
+            {% if stat_block.Senses %}
+              <h4>Senses</h4>
+              {% for key, value in stat_block.Senses.items() %}
+                <p>{{ key.replace('_', ' ').capitalize() }} {{ value }},</p>
+              {% endfor %}
+            {% endif %}
+          </div> <!-- property line -->
+          <div class="property-line">
+            {% if stat_block.Languages[0] %}
+              <h4>Languages</h4>
+              <p>{{ stat_block.Languages }}</p>
+            {% endif %}
+          </div> <!-- property line -->
+          <div class="property-line last">
+            <h4>Challenge</h4>
+            {% if stat_block.Challenge_rating < 5 %}
+              {% set p_bonus = "+2" %}
+            {% elif stat_block.Challenge_rating > 4 and stat_block.Challenge_rating < 9 %}
+              {% set p_bonus = "+3" %}
+            {% elif stat_block.Challenge_rating > 8 and stat_block.Challenge_rating < 13 %}
+              {% set p_bonus = "+4" %}
+            {% elif stat_block.Challenge_rating > 12 and stat_block.Challenge_rating < 17 %}
+              {% set p_bonus = "+5" %}
+            {% elif stat_block.Challenge_rating > 16 and stat_block.Challenge_rating < 21 %}
+              {% set p_bonus = "+6" %}
+            {% endif %}
+            <p>{{ stat_block.Challenge_rating }} ({{ stat_block.XP }} XP) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h4>Proficiency Bonus</h4></p>
+            <p>{{ p_bonus }}</p>
+          </div> <!-- property line -->
+        </div> <!-- top stats -->
+        <svg height="5" width="100%" class="tapered-rule">
+          <polyline points="0,0 400,2.5 0,5"></polyline>
+        </svg>
+        <div class="property-block">
+          {% for ability in stat_block.Special_Abilities %}
+            {% if ability.usage %}
+              <h4>{{ ability.name }} ({{ ability.usage.times }} {{ ability.usage.type }}).</h4>
+              <p>{{ ability.desc }}</p>
+              <br>
+              <br>
+            {% else %}
+              <h4>{{ ability.name }}.</h4>
+              <p>{{ ability.desc }}</p>
+              <br>
+              <br>
+            {% endif %}
+          {% endfor %}
+        </div> <!-- property block -->
+      </div> <!-- section left -->
+      <div class="section-right">
+        <div class="actions">
+          <h3>Actions</h3>
+          <div class="property-block">
+            {% for action in stat_block.Actions %}
+              {% if action.usage %}
+                <h4>{{ action.name }} ({{ action.usage.type }} {{ action.usage.min_value }} or greater ({{ action.usage.dice }}).</h4>
+                <p>{{ action.desc }}</p>
+                <br>
+                <br>
+              {% else %}
+                <h4>{{ action.name }}.</h4>
+                <p>{{ action.desc }}</p>
+                <br>
+                <br>
+              {% endif %}
+            {% endfor %}
+          </div> <!-- property block -->
+        </div> <!-- actions -->
+        {% if stat_block.Legendary_Actions %}
+          <div class="actions">
+            <h3>Legendary Actions</h3>
+            <div class="property-block">
+              <p>The {{ stat_block.Name }} can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature’s turn. The {{ stat_block.Name }} regains spent legendary actions at the start of its turn.</p>
+              <br>
+              <br>
+              {% for action in stat_block.Legendary_Actions %}
+                <h4>{{ action.name }}.</h4>
+                <p>{{ action.desc }}</p>
+                <br>
+                <br>
+              {% endfor %}
+            </div> <!-- property block -->
+          </div> <!-- actions -->
+        {% endif %}
+      </div> <!-- section right -->
+      <hr class="orange-border bottom" />
+    </div> <!-- stat block -->
+  </div>
+  <div class="img-container">
+    <img id="big-monster-img" src="https://www.aidedd.org/dnd/images/{{ monster_name }}.jpg" onerror="replaceMissingImage(this)">
+  </div>
+
+
+<script>
+  function replaceMissingImage(imageElement) {
+    // Replace the image source with the default image URL
+    imageElement.src = '{{ default_image_url }}';
+  }
+</script>
+
+{% endblock %}

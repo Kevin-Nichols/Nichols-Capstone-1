@@ -10,16 +10,16 @@ from functions import *
 CURR_USER_KEY = "curr_user"
 app = Flask(__name__)
 # #Deployment DB
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 # #Development DB
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///initiative-role'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///initiative-role'
 
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.config['SQLALCHEMY_ECHO'] = True
-# app.config['ENV'] = 'development'
-# app.config['DEBUG'] = True
-# app.config['TESTING'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ECHO'] = True
+app.config['ENV'] = 'development'
+app.config['DEBUG'] = True
+app.config['TESTING'] = True
 
 connect_db(app)
 db.create_all()
@@ -29,9 +29,9 @@ app.config['SECRET_KEY'] = "supersecret"
 # Having the Debug Toolbar show redirects explicitly is often useful;
 # however, if you want to turn it off, you can uncomment this line:
 
-# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
-# debug = DebugToolbarExtension(app)
+debug = DebugToolbarExtension(app)
 
 
 ##############################################################################
@@ -347,7 +347,7 @@ def stat_block_test(monster_name):
     monster_data = get_monster_data(url)
     stat_block = get_stat_block_data(monster_data)
     
-    return render_template('stats.html', stat_block=stat_block, monster_name=monster_name)
+    return render_template('encounters/stat-block.html', stat_block=stat_block, monster_name=monster_name)
 
 @app.route('/monster/add', methods=['POST'])
 def add_monster():

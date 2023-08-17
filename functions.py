@@ -65,9 +65,9 @@ def get_stat_block_data(data):
         "Size": data["size"],
         "Type": data["type"],
         "Alignment": data["alignment"],
-        "Armor Class": data["armor_class"],
-        "Hit Points": data["hit_points"],
-        "Hit Points Roll": data["hit_points_roll"],
+        "Armor_Class": data["armor_class"],
+        "Hit_Points": data["hit_points"],
+        "Hit_Points_Roll": data["hit_points_roll"],
         "Speed": data["speed"],
         "Strength": data["strength"],
         "Dexterity": data["dexterity"],
@@ -75,13 +75,18 @@ def get_stat_block_data(data):
         "Intelligence": data["intelligence"],
         "Wisdom": data["wisdom"],
         "Charisma": data["charisma"],
-        "Proficiencies": proficiencies,
+        "Proficiencies": data["proficiencies"],
+        "Damage_Vulnerabilities": data["damage_vulnerabilities"],
+        "Damage_Resistances": data["damage_resistances"],
+        "Damage_Immunities": data["damage_immunities"],
+        "Condition_Immunities": data["condition_immunities"],
         "Senses": data["senses"],
         "Languages": data["languages"],
         "Challenge_rating": data["challenge_rating"],
-        "Special Abilities": abilities,
+        "XP": data["xp"],
+        "Special_Abilities": data["special_abilities"],
         "Actions": actions,
-        "Legendary Actions": data["legendary_actions"],
+        "Legendary_Actions": data["legendary_actions"],
     }
     return stat_block
 
@@ -89,4 +94,3 @@ def get_stat_block_data(data):
 #TODO: Stretch goals I would like to achieve.
     # Change spacing on all encounters page.
     # Implement a "forgot my password" function and route.
-    # Make the monster stat page prettier.

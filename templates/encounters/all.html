@@ -4,7 +4,7 @@
   <h1 class="new-encounter-h1">All Encounters</h1>
 
   <div class="home-btns">
-  <ul>
+  <ul class="all-encounters-ul">
     {% for encounter in encounters %}
         <li class="all-encounters-li">
           <a class="encounter-a" href="/encounter/{{ encounter.id }}">{{ encounter.name }}</a>
